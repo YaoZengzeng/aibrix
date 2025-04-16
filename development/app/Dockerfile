@@ -26,7 +26,7 @@ COPY ./zscaler_root_ca.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates
 ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
-ENV MODEL_NAME=llama2-7b
+ENV MODEL_NAME=deepseek-r1-1-5b
 ARG SIMULATION=disabled
 
 # TODO: skip doing the simulation in docker build.

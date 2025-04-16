@@ -25,15 +25,15 @@ from vidur.entities import Request
 # Global storage for overridden values
 overrides = {}
 
-MODEL_NAME = os.getenv('MODEL_NAME', 'llama2-7b')
-DEPLOYMENT_NAME = os.getenv('DEPLOYMENT_NAME', 'llama2-7b')
+MODEL_NAME = os.getenv('MODEL_NAME', 'deepseek-r1-1-5b')
+DEPLOYMENT_NAME = os.getenv('MODEL_NAME', 'deepseek-r1')
 NAMESPACE = os.getenv('POD_NAMESPACE', 'default')
 DEFAULT_REPLICAS = int(os.getenv('DEFAULT_REPLICAS', '1'))
 SIMULATION = os.getenv('SIMULATION', 'disabled')
 
 modelMaps = {
-    "llama2-7b": "meta-llama/Llama-2-7b-hf",
-    "llama2-70b": "meta-llama/Llama-2-70b-hf"
+    "deepseek-r1-1-5b": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+    "deepseek-r1-7b": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 }
 
 # Polifill the necessary arguments.
@@ -108,11 +108,11 @@ def get_token_count(text):
 
 models = [
     {
-        "id": "meta-llama/Llama-2-7b-hf",
+        "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
         "object": "model",
         "created": 1715644056,
         "owned_by": "vllm",
-        "root": "meta-llama/Llama-2-7b-hf",
+        "root": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
         "parent": None,
         "permission": [
             {
@@ -136,7 +136,7 @@ models = [
         "object": "model",
         "created": 1715644056,
         "owned_by": "vllm",
-        "root": "meta-llama/Llama-2-7b-hf",
+        "root": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
         "parent": None,
         "permission": [
             {
