@@ -738,7 +738,7 @@ if __name__ == '__main__':
         except Exception as e:
             print(f"Failed to load k8s config: {e}")
 
-        app.run(host='0.0.0.0', port=8000)
+        app.run(host='0.0.0.0', port=8080)
 
     if simulator is not None:
         simulator.stop()
