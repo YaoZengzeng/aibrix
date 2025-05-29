@@ -10,8 +10,9 @@
 ### Deploy the mocked app
 1. Builder mocked base model image
 ```dockerfile
-docker build -t aibrix/vllm-mock:nightly -f Dockerfile .
+docker build -t ghcr.io/yaozengzeng/deepseek-r1:mock -f Dockerfile .
 ```
+
 
 1.b (Optional) Load container image to docker context
 
