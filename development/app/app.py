@@ -491,7 +491,7 @@ def metrics():
     generation_tokens_total = overrides.get("generation_tokens_total", randint(100, 1024) * success_total)
     running = overrides.get("running", randint(1, 100))
     cpu_running = overrides.get("cpu_running", randint(1, 100))
-    waiting = overrides.get("waiting", randint(1, 100))
+    waiting = overrides.get("waiting", randint(1, 5))
     swapped = overrides.get("swapped", randint(1, 100))
     max_running_capacity = 100
     gpu_cache_usage_perc = overrides.get("gpu_cache_usage_perc", min(100.0, (running / max_running_capacity) * 100))
