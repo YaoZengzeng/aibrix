@@ -476,8 +476,8 @@ def metrics():
         resp = apps_v1.read_namespaced_deployment(DEPLOYMENT_NAME, NAMESPACE)
         replicas = resp.spec.replicas if resp.spec.replicas is not None else 1
     except Exception as e:
-        print(f"Failed to get deployment information: {DEPLOYMENT_NAME=} {NAMESPACE=} error={str(e)}")
-        print(f"Due to the failure, replicas {DEFAULT_REPLICAS} will be used to calculate metrics")
+        #print(f"Failed to get deployment information: {DEPLOYMENT_NAME=} {NAMESPACE=} error={str(e)}")
+        #print(f"Due to the failure, replicas {DEFAULT_REPLICAS} will be used to calculate metrics")
         replicas = DEFAULT_REPLICAS
 
     # a reasonable mock total value
