@@ -1,5 +1,5 @@
 #!/bin/bash
 
-docker build -t ghcr.io/yaozengzeng/deepseek-r1:mock -f Dockerfile .
+docker build -t ghcr.io/yaozengzeng/vllm-mock:latest -f Dockerfile .
 
-docker push ghcr.io/yaozengzeng/deepseek-r1:mock
+docker push ghcr.io/yaozengzeng/vllm-mock:latest
