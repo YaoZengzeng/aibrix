@@ -162,7 +162,7 @@ models = [
 # the metrics and results in lots of meaningless requests that we do not want to log.
 def disable_endpoint_logs():
     """Disable logs for requests to specific endpoints."""
-    disabled_endpoints = ('/', '/healthz', '/metrics')
+    disabled_endpoints = ('/', '/healthz', '/metrics', '/v1/models')
     parent_log_request = serving.WSGIRequestHandler.log_request
 
     def log_request(self, *args, **kwargs):
