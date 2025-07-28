@@ -494,8 +494,8 @@ def metrics():
     waiting = overrides.get("waiting", randint(1, 5))
     swapped = overrides.get("swapped", randint(1, 100))
     max_running_capacity = 100
-    gpu_cache_usage_perc = overrides.get("gpu_cache_usage_perc", min(100.0, (running / max_running_capacity) * 100))
-    cpu_cache_usage_perc = overrides.get("cpu_cache_usage_perc", min(100.0, (cpu_running / max_running_capacity) * 100))
+    gpu_cache_usage_perc = overrides.get("gpu_cache_usage_perc", min(1.0, (running / max_running_capacity)))
+    cpu_cache_usage_perc = overrides.get("cpu_cache_usage_perc", min(1.0, (cpu_running / max_running_capacity)))
 
     # Define metrics and their attributes
     simple_metrics = [
