@@ -18,9 +18,7 @@ try:
 except Exception as e:
     print(f"Failed to import kubernetes, skip: {e}")
 
-from simulator import Simulator
-from vidur.config import SimulationConfig
-from vidur.entities import Request
+from simulator import Simulator, Request
 
 # Global storage for overridden values
 overrides = {}
@@ -94,16 +92,10 @@ HUGGINGFACE_TOKEN = configs.get("huggingface_token", "your huggingface token")
 
 
 def get_token_count(text):
-    try:
-        # Encode the text
-        encoded_input = tokenizer(text)
-
-        # Get the number of tokens
-        return len(encoded_input['input_ids'])
-    except Exception as e:
-        logger.error(f"Failed to get number of tokens: {e}")
-
-    return 1
+    # Simple heuristic for token count
+    if not text:
+        return 0
+    return max(1, len(text) // 4)
 
 
 models = [
@@ -225,6 +217,16 @@ def completion():
         if not prompt or not model:
             return jsonify({"status": "error", "message": "Prompt and model are required"}), 400
 
+        if model != MODEL_NAME:
+            return jsonify({
+                "error": {
+                    "message": f"The model `{model}` does not exist",
+                    "type": "invalid_request_error",
+                    "param": "model",
+                    "code": "model_not_found"
+                }
+            }), 404
+
         arrived_at = datetime.now().timestamp()
         input_tokens = get_token_count(prompt)
         output_tokens = max_tokens if max_tokens else randint(10, 500)
@@ -287,6 +289,16 @@ def chat_completions():
         max_tokens = request.json.get('max_tokens')
         if not messages or not model:
             return jsonify({"status": "error", "message": "Messages and model are required"}), 400
+
+        if model != MODEL_NAME:
+            return jsonify({
+                "error": {
+                    "message": f"The model `{model}` does not exist",
+                    "type": "invalid_request_error",
+                    "param": "model",
+                    "code": "model_not_found"
+                }
+            }), 404
 
         arrived_at = datetime.now().timestamp()
         input_tokens = sum(get_token_count(message["content"]) for message in messages)
@@ -692,32 +704,12 @@ if __name__ == '__main__':
 
     # Restore -h functionality
     if '-h' in sys.argv:
-        SimulationConfig.create_from_cli_args()
+        print("Mock server help: [no options available]")
 
     # Launch simulator
     if gpu_device != "disabled":
-        # Load the tokenizer for your model
-        from transformers import AutoTokenizer
-
-        default_model = 'bert-base-uncased'
-        try:
-            # can we make this as an application argument.
-            # no need to use such map, we can use huggingface id directly.
-            token_model = modelMaps.get(MODEL_NAME, default_model)
-            tokenizer = AutoTokenizer.from_pretrained(
-                token_model,
-                token=HUGGINGFACE_TOKEN,
-                model_max_length=16384,  # Suppress warning
-                clean_up_tokenization_spaces=True)
-        except Exception as e:
-            logger.error(f"Failed to initialize tokenizer, will use default tokenizer model: {e}")
-            tokenizer = AutoTokenizer.from_pretrained(
-                default_model,
-                model_max_length=16384,  # Suppress warning
-                clean_up_tokenization_spaces=True)
-
-        # TODO: check whether able to use argparse to build SimulationConfig
-        simulator = Simulator(SimulationConfig.create_from_cli_args())
+        # Simplified simulator initialization
+        simulator = Simulator()
         overrides = {
             "total": 100.0,
             "running": 0,

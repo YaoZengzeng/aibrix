@@ -1,12 +1,3 @@
 flask
 Flask-HTTPAuth
 kubernetes
-pandas
-scikit-learn
-wandb
-ddsketch
-plotly_express
-fasteners
-transformers
-git+https://github.com/zhangjyr/vidur.git
-ray[default]
