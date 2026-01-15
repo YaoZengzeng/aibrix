@@ -217,7 +217,8 @@ def completion():
         if not prompt or not model:
             return jsonify({"status": "error", "message": "Prompt and model are required"}), 400
 
-        if model != MODEL_NAME:
+        # Check if model exists in the models list (includes base model and loaded LoRA adapters)
+        if not any(m['id'] == model for m in models):
             return jsonify({
                 "error": {
                     "message": f"The model `{model}` does not exist",
@@ -290,7 +291,8 @@ def chat_completions():
         if not messages or not model:
             return jsonify({"status": "error", "message": "Messages and model are required"}), 400
 
-        if model != MODEL_NAME:
+        # Check if model exists in the models list (includes base model and loaded LoRA adapters)
+        if not any(m['id'] == model for m in models):
             return jsonify({
                 "error": {
                     "message": f"The model `{model}` does not exist",
